@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.start-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-screen h1 {
+  font-size: 4rem;
+}
+
+.start-screen h2 {
+  font-size: 3rem;
+}
+
+.start-screen button {
+  font-size: 2rem;
+  width: 10%;
+}
