@@ -18,23 +18,30 @@ var qArr = [
 
 // Variables
 var counter = 3;
-var arrIndex = qArr.length - 1;
-console.log(typeof arrIndex);
+var arrIndex = 0;
 var theButton = document.querySelector(".btn-start");
 var btnHighScore = document.querySelector(".btn-high-score");
 var timerDiv = document.createElement("div");
 document.body.appendChild(timerDiv);
 var displayTimer = document.createElement("p");
 var setCounter = 0;
+var mainDiv = document.createElement("div");
+var questionsH1 = document.createElement("h1");
+var btn1 = document.createElement("button");
+var btn2 = document.createElement("button");
+var btn3 = document.createElement("button");
+var btn4 = document.createElement("button");
+var mainContainer = document.querySelector(".start-screen");
+var highScoreDiv = document.createElement("div");
 
 // Retrieves high score
 btnHighScore.onclick = function () {
+  mainContainer.setAttribute("style", "display: none");
   retriveData();
 };
 
 // Button click to remove main container
 theButton.onclick = function () {
-  var mainContainer = document.querySelector(".start-screen");
   mainContainer.setAttribute("style", "display: none");
 
   // Start counter
@@ -45,44 +52,86 @@ theButton.onclick = function () {
 
 // Display questions function
 function displayQuestions() {
-  var mainDiv = document.createElement("div");
   document.body.appendChild(mainDiv);
-  // Display question
-
-  var questionsH1 = document.createElement("h1");
-  questionsH1.textContent = qArr[arrIndex - 1].question;
+  questionsH1.textContent = qArr[arrIndex].question;
   mainDiv.appendChild(questionsH1);
 
   // Buttons to display answers
-  var btn1 = document.createElement("button");
-  var btn2 = document.createElement("button");
-  var btn3 = document.createElement("button");
-  var btn4 = document.createElement("button");
-  btn1.textContent = qArr[arrIndex - 1].answer1;
-  btn2.textContent = qArr[arrIndex - 1].answer2;
-  btn3.textContent = qArr[arrIndex - 1].answer3;
-  btn4.textContent = qArr[arrIndex - 1].correct;
+  // var btn1 = document.createElement("button");
+  // var btn2 = document.createElement("button");
+  // var btn3 = document.createElement("button");
+  // var btn4 = document.createElement("button");
+  btn1.textContent = qArr[arrIndex].answer1;
+  btn2.textContent = qArr[arrIndex].answer2;
+  btn3.textContent = qArr[arrIndex].answer3;
+  btn4.textContent = qArr[arrIndex].correct;
   mainDiv.append(btn1, btn2, btn3, btn4);
 
   //Button click event listener
   btn1.addEventListener("click", function () {
-    if (whatIs === "correct") {
+    if (this.textContent === qArr[arrIndex].correct) {
       alert("Correct");
     } else {
       alert("Incorrect");
     }
+
+    removeElements();
+    arrIndex++;
+    gameOver();
+  });
+
+  btn2.addEventListener("click", function () {
+    if (this.textContent === qArr[arrIndex].correct) {
+      alert("Correct");
+    } else {
+      alert("Incorrect");
+    }
+
+    removeElements();
+    arrIndex++;
+    gameOver();
+  });
+
+  btn3.addEventListener("click", function () {
+    if (this.textContent === qArr[arrIndex].correct) {
+      alert("Correct");
+    } else {
+      alert("Incorrect");
+    }
+    removeElements();
+    arrIndex++;
+    gameOver();
   });
 
   btn4.addEventListener("click", function () {
-    if (qArr[1].correct === "correct") {
+    if (this.textContent === qArr[arrIndex].correct) {
       alert("Correct");
     } else {
       alert("Incorrect");
     }
+    removeElements();
+    arrIndex++;
+    gameOver();
   });
+}
 
-  //Increment array index by one
-  arrIndex++;
+//Remove display elements
+function removeElements() {
+  mainDiv.remove();
+  questionsH1.remove();
+  btn1.remove();
+  btn2.remove();
+  btn3.remove();
+  btn4.remove();
+}
+
+// Checks if all questions have been answered
+function gameOver() {
+  if (arrIndex > qArr.length) {
+    alert("Game over");
+  } else {
+    displayQuestions();
+  }
 }
 
 //count-down function
@@ -116,6 +165,32 @@ function storeData() {
 }
 
 function retriveData() {
-  var savedData = localStorage.getItem("score");
-  alert(savedData);
+  document.body.appendChild(highScoreDiv);
+  var highScoreTitle = document.createElement("h1");
+  highScoreTitle.textContent = "Current High Scores";
+  highScoreDiv.appendChild(highScoreTitle);
+  var btnMainMenu = document.createElement("button");
+  btnMainMenu.textContent = "Return to Main Menu";
+  highScoreDiv.appendChild(btnMainMenu);
+
+  btnMainMenu.addEventListener("click", function () {
+    highScoreDiv.setAttribute("style", "display: none");
+    mainContainer.setAttribute("style", "display: flex");
+    mainContainer.setAttribute("style", "flex-direction: column");
+    mainContainer.setAttribute("style", "justify-content: space-evenly");
+    mainContainer.setAttribute("style", "align-items: center");
+  });
+
+  var scoresText = document.createElement("p");
+
+  var getInitials = window.prompt("Enter initials you are searching for: ");
+  var highScoreSearch = localStorage.getItem(getInitials);
+
+  if (highScoreSearch === null) {
+    scoresText.textContent = "Person not found";
+    highScoreDiv.appendChild(scoresText);
+  } else {
+    scoresText.textContent = highScoreSearch;
+    highScoreDiv.appendChild(scoresText);
+  }
 }
