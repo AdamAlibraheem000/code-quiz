@@ -33,6 +33,7 @@ var btn3 = document.createElement("button");
 var btn4 = document.createElement("button");
 var mainContainer = document.querySelector(".start-screen");
 var highScoreDiv = document.createElement("div");
+var gameOverDiv = document.createElement("div");
 
 // Retrieves high score
 btnHighScore.onclick = function () {
@@ -45,7 +46,7 @@ theButton.onclick = function () {
   mainContainer.setAttribute("style", "display: none");
 
   // Start counter
-  // setCounter = setInterval(countDown, 1000);
+  setCounter = setInterval(countDown, 1000);
   displayQuestions();
   // storeData();
 };
@@ -55,12 +56,6 @@ function displayQuestions() {
   document.body.appendChild(mainDiv);
   questionsH1.textContent = qArr[arrIndex].question;
   mainDiv.appendChild(questionsH1);
-
-  // Buttons to display answers
-  // var btn1 = document.createElement("button");
-  // var btn2 = document.createElement("button");
-  // var btn3 = document.createElement("button");
-  // var btn4 = document.createElement("button");
   btn1.textContent = qArr[arrIndex].answer1;
   btn2.textContent = qArr[arrIndex].answer2;
   btn3.textContent = qArr[arrIndex].answer3;
@@ -139,6 +134,8 @@ function countDown() {
   if (counter === 0) {
     clearInterval(setCounter); //stops setInterval timer
     alert("Times up");
+    mainDiv.setAttribute("style", "display: none");
+    storeData();
   }
 
   var displayCount = counter;
@@ -146,11 +143,15 @@ function countDown() {
 
   displayTimer.innerHTML = `${displayCount}`;
   timerDiv.appendChild(displayTimer);
-  // console.log;
 }
 
 // Store in local storage
 function storeData() {
+  document.body.appendChild(gameOverDiv);
+  var gameOverTitle = document.createElement("h1");
+  gameOverTitle.textContent = "Game Over! Thanks for playing!";
+  gameOverDiv.appendChild(gameOverTitle);
+
   // Ask for user's initials
   var usersInitials = prompt("Please enter your initials");
 
@@ -161,7 +162,13 @@ function storeData() {
   alert("Thank you " + usersInitials + " your high score is " + highScore);
 
   // Store in local storage
-  localStorage.setItem("score", JSON.stringify(usersInitials, highScore));
+  localStorage.setItem(usersInitials, highScore);
+
+  // var playGame = window.confirm("Do you wish to play game?");
+  // if (playGame) {
+  //   gameOverDiv.setAttribute("style", "display: none");
+  //   displayQuestions();
+  // }
 }
 
 function retriveData() {
@@ -190,7 +197,8 @@ function retriveData() {
     scoresText.textContent = "Person not found";
     highScoreDiv.appendChild(scoresText);
   } else {
-    scoresText.textContent = highScoreSearch;
+    scoresText.textContent =
+      getInitials + " has a high score of " + highScoreSearch;
     highScoreDiv.appendChild(scoresText);
   }
 }
