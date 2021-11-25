@@ -1,18 +1,40 @@
 // array of questions as objects
 var qArr = [
   {
-    question: "Is the sky blue?",
-    answer1: "no",
-    answer2: "yes",
-    correct: "maybe",
+    question: "What is Javascript?",
+    answer1: "broswer for the internet",
+    answer2: "latin dance",
+    correct: "high level programming language",
     answer3: "Can you repeat the question?",
   },
   {
-    question: "What time is it?",
-    answer1: "five",
-    answer2: "ten",
-    answer3: "15",
-    correct: "6pm",
+    question: "How do you check if something is equal to something else?",
+    answer1: "=",
+    answer2: "!==",
+    answer3: "==",
+    correct: "===",
+  },
+  {
+    question: "How can you store multple values in a variable?",
+    answer1: "use multple variables",
+    correct: "an array",
+    answer2: "Hash table",
+    answer3: "use const",
+  },
+  {
+    question:
+      "What is the keyword to store variables with values that cannot be changed?",
+    answer1: "goat_chz",
+    answer2: "var",
+    answer3: "let",
+    correct: "const",
+  },
+  {
+    question: "How do you connent HTML to js file?",
+    answer1: "<ul>",
+    answer2: "<a>",
+    answer3: "<link>",
+    correct: "<script>",
   },
 ];
 
@@ -68,6 +90,7 @@ function checkIfCorrect() {
     alert("Correct");
   } else {
     alert("Incorrect");
+    counter -= 20;
   }
 
   removeElements();
@@ -98,7 +121,10 @@ function removeElements() {
 function gameOver() {
   if (arrIndex === qArr.length) {
     // update game over
-    alert("Game over");
+    clearInterval(setCounter);
+    alert("All questions completed!");
+    mainDiv.setAttribute("style", "display: none");
+    storeData();
   } else {
     displayQuestions();
   }
