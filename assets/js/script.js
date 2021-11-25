@@ -17,7 +17,7 @@ var qArr = [
 ];
 
 // Variables
-var counter = 3;
+var counter = 60;
 var arrIndex = 0;
 var theButton = document.querySelector(".btn-start");
 var btnHighScore = document.querySelector(".btn-high-score");
@@ -61,54 +61,28 @@ function displayQuestions() {
   btn3.textContent = qArr[arrIndex].answer3;
   btn4.textContent = qArr[arrIndex].correct;
   mainDiv.append(btn1, btn2, btn3, btn4);
-
-  //Button click event listener
-  btn1.addEventListener("click", function () {
-    if (this.textContent === qArr[arrIndex].correct) {
-      alert("Correct");
-    } else {
-      alert("Incorrect");
-    }
-
-    removeElements();
-    arrIndex++;
-    gameOver();
-  });
-
-  btn2.addEventListener("click", function () {
-    if (this.textContent === qArr[arrIndex].correct) {
-      alert("Correct");
-    } else {
-      alert("Incorrect");
-    }
-
-    removeElements();
-    arrIndex++;
-    gameOver();
-  });
-
-  btn3.addEventListener("click", function () {
-    if (this.textContent === qArr[arrIndex].correct) {
-      alert("Correct");
-    } else {
-      alert("Incorrect");
-    }
-    removeElements();
-    arrIndex++;
-    gameOver();
-  });
-
-  btn4.addEventListener("click", function () {
-    if (this.textContent === qArr[arrIndex].correct) {
-      alert("Correct");
-    } else {
-      alert("Incorrect");
-    }
-    removeElements();
-    arrIndex++;
-    gameOver();
-  });
 }
+
+function checkIfCorrect() {
+  if (this.textContent === qArr[arrIndex].correct) {
+    alert("Correct");
+  } else {
+    alert("Incorrect");
+  }
+
+  removeElements();
+  arrIndex++;
+  gameOver();
+}
+
+//Button click event listener
+btn1.addEventListener("click", checkIfCorrect);
+
+btn2.addEventListener("click", checkIfCorrect);
+
+btn3.addEventListener("click", checkIfCorrect);
+
+btn4.addEventListener("click", checkIfCorrect);
 
 //Remove display elements
 function removeElements() {
@@ -122,7 +96,8 @@ function removeElements() {
 
 // Checks if all questions have been answered
 function gameOver() {
-  if (arrIndex > qArr.length) {
+  if (arrIndex === qArr.length) {
+    // update game over
     alert("Game over");
   } else {
     displayQuestions();
